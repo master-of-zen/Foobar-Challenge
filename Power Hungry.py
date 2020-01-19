@@ -1,23 +1,21 @@
-from functools import reduce
-
-# 4/5 tests
-
 def solution(xs):
-    output = []
-    positive = [x for x in xs if x > 0]
+    positive = [x for x in xs if 1000 > x > 0]
     negative = sorted([x for x in xs if x < 0])
-    print(negative)
-    print(positive)
-    if (len(negative) + len(positive)) == 0:
-        return '0'
-    if len(negative) % 2 == 0 and len(negative) > 0:
-        for i in negative:
-            output.append(i)
-    elif (len(negative) - 1) != 0 and len(negative) % 2 != 0:
-        for i in sorted(negative[:-1]):
-            output.append(i)
 
+    output = 1
+
+    if len(xs) == 1:
+        return str(xs[0])
+
+    if len(xs) - (len(positive) + len(negative)) == 0:
+        return '0'
+
+    if len(negative) % 2 == 1:
+        negative = negative[:-1]
+
+    for i in negative:
+        output *= i
     for i in positive:
-        output.append(i)
-    output = reduce(lambda x, y: x*y, output)
+        output *= i
+
     return str(output)
